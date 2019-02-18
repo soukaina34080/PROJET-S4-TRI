@@ -3,9 +3,9 @@ import random
 import time
 
 
-def radixSort(nbElem):
+def radixSort(nbElem): #on définit une fonction qui prend en paramètre nbElem
     start_time = time.time()
-    list_vals = random.sample(range(1000),nbElem)
+    list_vals = random.sample(range(1000),nbElem) #on créé une liste de nbElem éléments devaleurs aléatoires inférieures ou égale à 1000
     RADIX = 10
     maxLength = False
     tmp = -1
@@ -13,11 +13,11 @@ def radixSort(nbElem):
 
     while not maxLength:
         maxLength = True
-        buckets = [list() for _ in range( RADIX )]
+        buckets = [list() for _ in range( RADIX )] # On créé une sous liste Buckets contenant tous les éléments en base 10
 
         for i in list_vals:
             tmp = i // placement
-            buckets[tmp % RADIX].append( i )
+            buckets[tmp % RADIX].append( i ) # On distribue des éléments de la liste initiale dans les sous listes
             if maxLength and tmp > 0:
                 maxLength = False
 
