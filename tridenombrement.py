@@ -40,15 +40,24 @@ def counting_sort(nbElem):
     f.close()
 
     somme = 0
+    moyenne = 0
+    nbLigne = 0
     cr = csv.reader(open("%dtridenombrement.csv" %nbElem, "r"))
     for r in cr: #r = colone
         somme  += float(r[0])
+        nbLigne += 1
     print("Somme temps : %s" % somme)
+    moyenne = somme / nbLigne
+    print("Moyenne : %s" % moyenne)
+    print("Nb valeur : %s " % nbLigne)
+
+    moy = open('%dmoytridenombrement.csv' % nbElem, 'w')
+    moy.write(str(moyenne) + '\n')
+    moy.close()
 
 
-        # moy = 0
-        # moy = somme / len(cr.readlines())
-        # print(moy)
+
+       
 
 
 def main():
