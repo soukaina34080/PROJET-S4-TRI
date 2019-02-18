@@ -7,7 +7,9 @@ import matplotlib.pyplot as plt
 
 
 def counting_sort(nbElem):
+    #début timer
     start_time = time.time()
+    #mise en place d'une liste de nbElem de 0 à 1000
     list_vals = random.sample(range(1000), nbElem)
 
     liste = []
