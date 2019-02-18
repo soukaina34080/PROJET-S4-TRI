@@ -5,7 +5,7 @@ import csv
 
 
 def bucketSort(nbElem):
-    array = random.sample(range(1000), nbElem)
+    array = random.sample(range(1000), nbElem) #initialise tableau d'entier
     if len(array) == 0:
         return array
     bucketSize= 10
