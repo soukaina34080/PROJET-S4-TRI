@@ -33,7 +33,7 @@ def counting_sort(nbElem):
             list_sorted.append(i);
             list_counts[i] -= 1;
 
-            # affichage avant après tri
+    # affichage avant après tri
     print(list_vals);
     print(list_sorted);
 
@@ -77,11 +77,16 @@ def courbe():
     x = []
     y = []
 
+    #on ouvre le fichier contenant les moyennes selon le nbElem
     with open('moytridenombrement.txt', 'r') as csvfile:
+
+        #on délimite la séparation entre la moyenne et le nbElem par une virgule
         plots = csv.reader(csvfile, delimiter=',')
+        #on attribut les valeurs du nbElem à x et de la moyenne à y
         for row in plots:
             x.append(float(row[1]))
             y.append(float(row[0]))
+    #on dessine la courbe
     plt.plot(x, y, label='Denombrement')
     plt.xlabel('nbElem')
     plt.ylabel('Temps')
