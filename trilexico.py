@@ -4,7 +4,7 @@ import time
 from string import ascii_letters
 
 def sortLexo(nbElem): 
-    start_time = time.time()
+    start_time = time.time() #enregistre le temps de début
     listwords = ["".join(random.choice(ascii_letters) 
                          for j in range(random.randint(2,10)) ) #nb lettre mot
                  for i in range(nbElem) ] #nb mot
@@ -13,17 +13,17 @@ def sortLexo(nbElem):
     listwords.sort() 
 
     # affiche les mots dans l'ordre alphabetique
-   # for i in listwords: 
+    # for i in listwords: 
     #    print( i )  
         
     
-    print(listwords)
+    print(listwords) #affiche la liste de mots triés
     
-    tempsEc = time.time() - start_time;
+    tempsEc = time.time() - start_time; #temps écoulé
     print("Temps d'execution : %s secondes" % (tempsEc))
     
     
-    f = open( '%dtrilexico.txt' %nbElem, 'a' )
+    f = open( '%dtrilexico.txt' %nbElem, 'a' ) #ouvre le fichier dans lequel on va enregistrer le temps
     f.write( str(tempsEc) + '\n' )
     f.close() 
      
