@@ -1,7 +1,9 @@
 import csv
 import random
 import time
-from array import array
+import matplotlib.pyplot as plt
+
+
 
 
 def counting_sort(nbElem):
@@ -28,42 +30,79 @@ def counting_sort(nbElem):
         while (list_counts[i] > 0):
             list_sorted.append(i);
             list_counts[i] -= 1;
-            # affichage avant après
+
+            # affichage avant après tri
     print(list_vals);
     print(list_sorted);
 
+    # calcul temps écoulé
     tempsEc = time.time() - start_time;
     print("Temps d'execution : %s secondes" % (tempsEc))
 
+    # écrit le temps écoulé dans le fichier [nbElem]tridenombrement.csv
     f = open('%dtridenombrement.csv' % nbElem, 'a')
     f.write(str(tempsEc) + '\n')
     f.close()
 
+
+    #calcul de la moyenne à l'aide des variable : somme, moyenne, nbLigne
     somme = 0
     moyenne = 0
     nbLigne = 0
-    cr = csv.reader(open("%dtridenombrement.csv" %nbElem, "r"))
-    for r in cr: #r = colone
-        somme  += float(r[0])
+
+    #on ouvre le fichier contenant les temps en lecture
+    cr = csv.reader(open("%dtridenombrement.csv" % nbElem, "r"))
+
+    #pour chaque élément de la colonne r, on additionne les valeur et on
+    #incrémente le nbLigne afin de calculer la moyenne
+    for r in cr:  # r = colone
+        somme += float(r[0])
         nbLigne += 1
-    print("Somme temps : %s" % somme)
+   # print("Somme temps : %s" % somme)
     moyenne = somme / nbLigne
     print("Moyenne : %s" % moyenne)
     print("Nb valeur : %s " % nbLigne)
 
-    moy = open('%dmoytridenombrement.csv' % nbElem, 'w')
-    moy.write(str(moyenne) + '\n')
+    #on enregistre la moyenne obtenu dans le fichier moytridenombrement.txt
+    moy = open('moytridenombrement.txt', 'a')
+    moy.write(str(moyenne) + ',' + str(nbElem) + '\n')
     moy.close()
 
 
 
-       
+def courbe():
+    # on affiche la courbe des moyennes selon le nbElem
+    x = []
+    y = []
+
+    with open('moytridenombrement.txt', 'r') as csvfile:
+        plots = csv.reader(csvfile, delimiter=',')
+        for row in plots:
+            x.append(float(row[1]))
+            y.append(float(row[0]))
+    plt.plot(x, y, label='Denombrement')
+    plt.xlabel('nbElem')
+    plt.ylabel('Temps')
+    plt.title('Courbe tri')
+    plt.legend()
+    plt.show()
+
+    #on efface les moyenne afin d'afficher une nouvelle courbe
+    #avec les nouvelles valeurs
+    open("moytridenombrement.txt", "w").close()
+
 
 
 def main():
+    counting_sort(10);
     counting_sort(15);
+    counting_sort(20);
+    counting_sort(25);
+    counting_sort(30);
+    counting_sort(35);
+
+    courbe();
+
 
 
 main()
-
-
