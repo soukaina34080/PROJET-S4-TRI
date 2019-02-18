@@ -1,3 +1,4 @@
+import csv
 import random
 import string
 import time
@@ -26,6 +27,24 @@ def sortLexo(nbElem):
     f = open( '%dtrilexico.txt' %nbElem, 'a' ) #ouvre le fichier dans lequel on va enregistrer le temps
     f.write( str(tempsEc) + '\n' )
     f.close() 
+    
+    #calcul de la moyenne du temps d'exécution de l'algo
+    somme = 0
+    moyenne = 0
+    nbLigne = 0
+    cr = csv.reader(open("%dtrilexico.csv" %nbElem, "r"))
+    for r in cr: #r = colonne
+        somme  += float(r[0])
+        nbLigne += 1
+    print("Somme temps : %s" % somme)
+    moyenne = somme / nbLigne
+    print("Moyenne : %s" % moyenne)
+    print("Nb valeur : %s " % nbLigne)
+    
+    #stockage du temps moyen dans un fichier
+    moy = open('%dmoytrilexico.csv' % nbElem, 'w')
+    moy.write(str(moyenne) + '\n')
+    moy.close()
      
 
 if __name__ == '__main__': 
