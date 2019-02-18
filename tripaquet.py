@@ -1,6 +1,7 @@
 import time
 import random
 import math
+import csv
 
 
 def bucketSort(nbElem):
@@ -36,6 +37,24 @@ def bucketSort(nbElem):
             array.append(buckets[i][j])
 
     return array
+
+    #calcul de la moyenne du temps d'exécution de l'algo
+    somme = 0
+    moyenne = 0
+    nbLigne = 0
+    cr = csv.reader(open("%dtripaquet.csv" %nbElem, "r"))
+    for r in cr: #r = colonne
+        somme  += float(r[0])
+        nbLigne += 1
+    print("Somme temps : %s" % somme)
+    moyenne = somme / nbLigne
+    print("Moyenne : %s" % moyenne)
+    print("Nb valeur : %s " % nbLigne)
+    
+    #stockage du temps moyen dans un fichier
+    moy = open('%dmoytripaquet.csv' % nbElem, 'w')
+    moy.write(str(moyenne) + '\n')
+    moy.close()
     
 def main():
     
