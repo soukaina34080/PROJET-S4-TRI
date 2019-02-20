@@ -2,14 +2,14 @@ import csv
 import random
 import time
 import matplotlib.pyplot as plt
-
-
+import os
+import getpass
 
 
 def counting_sort(nbElem):
-    #début timer
+    #debut timer
     start_time = time.time()
-    #mise en place d'une liste de nbElem de 0 à 1000
+    # mise en place d'une liste de nbElem de 0 à 1000
     list_vals = random.sample(range(1000), nbElem)
 
     liste = []
@@ -42,34 +42,36 @@ def counting_sort(nbElem):
     print("Temps d'execution : %s secondes" % (tempsEc))
 
     # écrit le temps écoulé dans le fichier [nbElem]tridenombrement.csv
-    f = open('%dtridenombrement.csv' % nbElem, 'a')
+    savepathTemps = '/home/' + getpass.getuser() + '/PycharmProjects/PROJET-TRI/temps'
+    completePathTemps = os.path.join(savepathTemps, '%dtridenombrement.csv ' % nbElem)
+    f = open(completePathTemps, 'a')
     f.write(str(tempsEc) + '\n')
     f.close()
 
-
-    #calcul de la moyenne à l'aide des variable : somme, moyenne, nbLigne
+    # calcul de la moyenne à l'aide des variable : somme, moyenne, nbLigne
     somme = 0
     moyenne = 0
     nbLigne = 0
 
-    #on ouvre le fichier contenant les temps en lecture
-    cr = csv.reader(open("%dtridenombrement.csv" % nbElem, "r"))
+    # on ouvre le fichier contenant les temps en lecture
+    cr = csv.reader(open(completePathTemps, "r"))
 
-    #pour chaque élément de la colonne r, on additionne les valeur et on
-    #incrémente le nbLigne afin de calculer la moyenne
+    # pour chaque élément de la colonne r, on additionne les valeur et on
+    # incrémente le nbLigne afin de calculer la moyenne
     for r in cr:  # r = colone
         somme += float(r[0])
         nbLigne += 1
-   # print("Somme temps : %s" % somme)
+    # print("Somme temps : %s" % somme)
     moyenne = somme / nbLigne
     print("Moyenne : %s" % moyenne)
     print("Nb valeur : %s " % nbLigne)
 
-    #on enregistre la moyenne obtenu dans le fichier moytridenombrement.txt
-    moy = open('moytridenombrement.txt', 'a')
+    # on enregistre la moyenne obtenu dans le fichier moytridenombrement.txt
+    savepathMoy = '/home/' + getpass.getuser() + '/PycharmProjects/PROJET-TRI/moy'
+    completePathMoy = os.path.join(savepathMoy, 'moytridenombrement.txt')
+    moy = open(completePathMoy, 'a')
     moy.write(str(moyenne) + ',' + str(nbElem) + '\n')
     moy.close()
-
 
 
 def courbe():
@@ -77,16 +79,17 @@ def courbe():
     x = []
     y = []
 
-    #on ouvre le fichier contenant les moyennes selon le nbElem
-    with open('moytridenombrement.txt', 'r') as csvfile:
-
-        #on délimite la séparation entre la moyenne et le nbElem par une virgule
+    savepathMoy = '/home/' + getpass.getuser() + 'PycharmProjects/PROJET-TRI/moy'
+    completePathMoy = os.path.join(savepathMoy, 'moytridenombrement.txt')
+    # on ouvre le fichier contenant les moyennes selon le nbElem
+    with open(completePathMoy, 'r') as csvfile:
+        # on délimite la séparation entre la moyenne et le nbElem par une virgule
         plots = csv.reader(csvfile, delimiter=',')
-        #on attribut les valeurs du nbElem à x et de la moyenne à y
+        # on attribut les valeurs du nbElem à x et de la moyenne à y
         for row in plots:
             x.append(float(row[1]))
             y.append(float(row[0]))
-    #on dessine la courbe
+    # on dessine la courbe
     plt.plot(x, y, label='Denombrement')
     plt.xlabel('nbElem')
     plt.ylabel('Temps')
@@ -94,10 +97,9 @@ def courbe():
     plt.legend()
     plt.show()
 
-    #on efface les moyenne afin d'afficher une nouvelle courbe
-    #avec les nouvelles valeurs
-    open("moytridenombrement.txt", "w").close()
-
+    # on efface les moyenne afin d'afficher une nouvelle courbe
+    # avec les nouvelles valeurs
+    open(completePathMoy, "w").close()
 
 
 def main():
@@ -109,7 +111,6 @@ def main():
     counting_sort(35);
 
     courbe();
-
 
 
 main()
