@@ -79,7 +79,7 @@ def courbe():
     x = []
     y = []
 
-    savepathMoy = '/home/' + getpass.getuser() + 'PycharmProjects/PROJET-TRI/moy'
+    savepathMoy = '/home/' + getpass.getuser() + '/PycharmProjects/PROJET-TRI/moy'
     completePathMoy = os.path.join(savepathMoy, 'moytridenombrement.txt')
     # on ouvre le fichier contenant les moyennes selon le nbElem
     with open(completePathMoy, 'r') as csvfile:
