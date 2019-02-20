@@ -4,7 +4,8 @@ import time
 import matplotlib.pyplot as plt
 import os
 import getpass
-
+import sys
+from pathlib import Path
 
 def counting_sort(nbElem):
     #debut timer
@@ -42,7 +43,7 @@ def counting_sort(nbElem):
     print("Temps d'execution : %s secondes" % (tempsEc))
 
     # écrit le temps écoulé dans le fichier [nbElem]tridenombrement.csv
-    savepathTemps = '/home/' + getpass.getuser() + '/PycharmProjects/PROJET-TRI/temps'
+    savepathTemps =  str(Path.home()) + '/PycharmProjects/PROJET-TRI/tempsDenombrement'
     completePathTemps = os.path.join(savepathTemps, '%dtridenombrement.csv ' % nbElem)
     f = open(completePathTemps, 'a')
     f.write(str(tempsEc) + '\n')
@@ -67,7 +68,7 @@ def counting_sort(nbElem):
     print("Nb valeur : %s " % nbLigne)
 
     # on enregistre la moyenne obtenu dans le fichier moytridenombrement.txt
-    savepathMoy = '/home/' + getpass.getuser() + '/PycharmProjects/PROJET-TRI/moy'
+    savepathMoy = str(Path.home()) + '/PycharmProjects/PROJET-TRI/moyDenombrement'
     completePathMoy = os.path.join(savepathMoy, 'moytridenombrement.txt')
     moy = open(completePathMoy, 'a')
     moy.write(str(moyenne) + ',' + str(nbElem) + '\n')
@@ -79,7 +80,7 @@ def courbe():
     x = []
     y = []
 
-    savepathMoy = '/home/' + getpass.getuser() + '/PycharmProjects/PROJET-TRI/moy'
+    savepathMoy = str(Path.home()) +'/PycharmProjects/PROJET-TRI/moyDenombrement'
     completePathMoy = os.path.join(savepathMoy, 'moytridenombrement.txt')
     # on ouvre le fichier contenant les moyennes selon le nbElem
     with open(completePathMoy, 'r') as csvfile:
