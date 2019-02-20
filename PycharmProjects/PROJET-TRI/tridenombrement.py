@@ -104,6 +104,7 @@ def courbe():
 
 
 def main():
+
     counting_sort(10);
     counting_sort(15);
     counting_sort(20);
