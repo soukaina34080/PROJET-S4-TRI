@@ -1,0 +1,259 @@
+\documentclass[12pt]{article}
+\usepackage[french]{babel}
+\usepackage{natbib}
+\usepackage{url}
+\usepackage{tcolorbox}
+\usepackage[utf8x]{inputenc}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\graphicspath{{images/}}
+\usepackage{parskip}
+\usepackage{fancyhdr}
+\usepackage{vmargin}
+    \usepackage[iso,french]{isodate}
+        \usepackage{datetime}
+\setmarginsrb{3 cm}{2.5 cm}{3 cm}{2.5 cm}{1 cm}{1.5 cm}{1 cm}{1.5 cm}
+
+\title{Comparaison de tri en complexité linéaire}								% Title
+					% Author
+										
+
+\makeatletter
+\let\thetitle\@title
+
+\let\thedate\@date
+\makeatother
+
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{\theauthor}
+\lhead{\thetitle}
+\cfoot{\thepage}
+
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{titlepage}
+	\centering
+    \vspace*{0.1 cm}
+    \includegraphics[scale = 1.2]{logo.png}\\[3.0 cm]	% University Logo
+    \textsc{\LARGE  Rapport de projet }\\[1.0 cm]	% University Name
+ 
+
+
+\ddmmyyyydate \today
+
+    
+    
+	\textsc{\Large Licence informatique }\\[0.5 cm]				% Course Code
+	\rule{\linewidth}{0.2 mm} \\[0.4 cm]
+	{ \huge \bfseries \thetitle}\\
+	\rule{\linewidth}{0.2 mm} \\[1.5 cm]
+	
+	\begin{minipage}{0.4\textwidth}
+		\begin{flushleft} \large
+			\emph{Par :}\\
+			MAJDOUL  Kaoutar\\
+            CHAMROUK Laila\\
+            MESSAOUDI Soukaina\\
+            LAAFOU Ayoub\\
+			\end{flushleft}
+			\end{minipage}~
+			\begin{minipage}{0.4\textwidth}
+            
+			\begin{flushright} \large
+			\emph{Sous la direction de  :} \\
+			M. GIROUDEAU\\
+        
+		\end{flushright}
+        
+	\end{minipage}\\[2 cm]
+	
+	
+    
+    
+    
+    
+	
+\end{titlepage}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\LARGE\textbf{Remerciement}\\ \vspace{0.5 cm}
+
+\newpage
+
+\LARGE\textbf{Introduction}\\ \vspace{0.5 cm}
+
+\normalsize{Dans le cadre du projet se déroulant  [à completer]}
+
+
+
+
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\tableofcontents
+
+\newpage
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\section{Tri dénombrement}
+\subsection{Description}
+
+
+
+\hspace{1.0 cm} Le tri dénombrement est un algorithme de tri reposant sur le principe de construction d'un histogramme des données puis le balayage de celui-ci de façon croissante afin d'obtenir les données triées.
+De ce fait, ici, plusieurs éléments identiques seront représentés par un unique élément quantifié. Ce tri ne peut donc pas être appliqué sur des structures complexes, et il convient exclusivement aux données constituées de nombres entiers compris entre une borne minimale et une borne maximale connues. Dans un souci d'efficacité, celles-ci doivent être relativement proches l'une de l'autre, ainsi que le nombre d'éléments doit être relativement grand. 
+
+
+Tout d'abord, on parcourt le tableau et on compte le nombre de fois que chaque élément apparaît. Une fois qu’on a le tableau des effectifs E, avec E[i] le nombre de fois où i apparaît dans le tableau, on peut le parcourir dans le sens croissant et placer dans le tableau trié E[i] fois l’élément i avec i allant de l’élément minimum du tableau jusqu’à l’élément maximum.\\
+
+
+Ainsi, l'algorithme donne le psuedo-code suivant : \\
+
+\begin{tcolorbox}
+Chercher l'élément maximum du tableau \\
+ Créer un tableau E de taille Max + 1, initialisé à 0\\
+
+Pour chaque élément du tableau\\
+\hspace*{1.0 cm} Incrémenter E[Tableau[i]]\\
+
+Pour chaque élément de E\\
+\hspace*{1.0 cm}   Recopier E[i] fois le nombre i dans le tableau trié
+\end{tcolorbox}
+
+
+\newpage
+\subsection{Exemple}
+\hspace{1.0 cm} Afin d'illustrer cet algorithme nous allons dérouler un exemple de son utilisation.
+Voici un tableau d’entier que l’on souhaite trier dans l’ordre croissant en utilisant le tri par dénombrement : 8, 6, 1, 3, 8, 1, 1.
+La première étape est de créer notre tableau des effectifs H, la deuxième est simplement de le parcourir et de recopier dans le tableau trié les valeurs : 
+
+\vspace{0.5 cm}
+\hspace{3.0 cm}
+\begin{tabular}{|l|c|c|r|}
+  \hline
+  i & H[i]  & Action & Tableau trié \\
+  \hline
+  0 &	0 &	on ne fait rien &\\
+  1 &	3 &	on ajoute trois fois 1 &	1 1 1\\
+  2 &	0 &	on ne fait rien &	1 1 1\\
+  3 &	1 &	on ajoute une fois 3 &	1 1 1 3\\
+  4 &	0& 	on ne fait rien &	1 1 1 3\\
+5 &	0 &	on ne fait rien &	1 1 1 3\\
+6 &	1 &	on ajoute une fois 6 &	1 1 1 3 6\\
+7 &	0 &	on ne fait rien  &	1 1 1 3 6\\
+8 &	2& 	on ajoute deux fois 8 &	1 1 1 3 6 8 8\\
+  \hline
+\end{tabular}
+
+
+\vspace{1.0 cm}
+On a atteint le maximum de notre tableau des effectifs H, notre tableau est donc trié : 1, 1, 1, 3, 6, 8, 8.
+
+
+
+
+\newpage 
+\subsection{Complexité}
+
+
+
+Notons n la taille de la liste considérée. Le calcul du minimum et du maximum coûte un parcourt de la liste, soit Θ(n) et l'allocation de l'histogramme Θ(m) où m désigne l'étendue de la liste L. Notons H l'histogramme, la construction de celui-ci demande un nouveau parcourt de la liste et à donc un coût de Θ(n). La reconstruction de la liste dans la boucle est facile à analyser globalement, on vide chacun des H[i] et on sait que : 
+
+
+\hspace{6.0 cm}\large\sum\limits_{i=1}^{maxL−minL+1}  H[i]=n \\
+
+
+\normalsize donc la reconstruction de la liste coûte elle aussi Θ(n).
+
+
+\normalsize Les seules opérations que l'on effectue dans notre fonction se font en temps linéaire. L'initialisation du tableau des effectifs se fait en O(n) (avec n la taille de la liste en entrée), et la copie des éléments dans notre tableau trié en O(m) (avec m correspondant à max).
+
+
+La complexité de l'algorithme de tri par dénombrement T pour une liste L de taille n et d'étendue m est : 
+
+
+\hspace{6.0 cm}\large T(n,m)=Θ(n+m) \\ 
+
+
+\normalsize Cet algorithme n'est donc linéaire que si la taille m de l'histogramme reste raisonnable O(n) au regard de la taille de la liste, autrement dit quand la dispersion est faible et dans ce cas T(n,m)=Θ(n). C'est la dispersion qui conditionnera l'utilisation ou non de ce tri. 
+
+
+
+
+La complexité finale de notre algorithme est donc O(n+m), soit une complexité en temps linéaire.
+
+\newpage
+\subsection{Avantages et inconvénients}
+
+
+\vspace{0.5 cm}
+
+\begin{tabular}{l}
+  \hline
+  Points positifs  \\
+  \hline 
+  \vspace{0.1 cm} \\
+\vspace{0.5 cm}     - Très efficace si les n nombres à trier son petits (<= n). &
+      
+ \vspace{0.5 cm}    - Ne fait aucune comparaison. & 
+      
+    \vspace{0.5 cm} - Peut optimiser d'autre algorithme de tri, tel que le tri par base. & 
+\vspace{0.5 cm}     - Stable puisqu’il préserve l’ordre initial dans le tableau
+     
+  \hline
+
+\end{tabular}
+
+\begin{tabular}{l}
+  \hline 
+  Points négatifs  \\
+  \hline
+  \vspace{0.1 cm} \\
+ \vspace{0.5 cm}    - S'exécute uniquement sur des nombres entiers. &
+      
+   - La complexité en mémoire est mauvaise car l'algorithme peut prendre très vite \\ beaucoup de place.
+     le tableau des effectifs E a pour taille \\ la valeur maximale du tableau, or si cette valeur est très grande, \\
+\vspace{0.5 cm}      le tableau H prendra énormément de place en mémoire. &
+      
+   - Si les valeurs du tableau sont éloignées entre elles, alors beaucoup d’espace \\ 
+\vspace{0.5 cm}  mémoire restera inutilisé. & 
+ 
+  \hline
+
+\end{tabular}
+
+\vspace{0.5 cm} 
+Cet algorithme est donc très efficace mais il faut savoir faire un choix entre rapidité et stockage, en plus de ne pouvoir l'utiliser que sur des nombre entiers.
+ 
+\pagebreak
+
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Conception}
+\newpage 
+
+\section{Résultats}
+\newpage 
+\section{Organisation}
+\newpage 
+\section{Conclusion}
+
+\newpage
+%\bibliographystyle{plain}
+%\bibliography{biblist}
+
+\end{document}
