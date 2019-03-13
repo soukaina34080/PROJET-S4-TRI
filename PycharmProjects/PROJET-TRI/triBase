@@ -1,0 +1,55 @@
+#!/usr/bin/env python
+import random
+import time
+
+ 
+def radixSort(nbElem): #on définit une fonction qui prend en paramètre nbElem
+    start_time = time.time()
+    list_vals = random.sample(range(1000),nbElem) #on créé une liste de nbElem éléments de valeurs aléatoires inférieures ou égale à 1000
+    maxLength = False   #On initialise maxLenght à False qui est vrai si on est sur le dernier placement 
+    placement = 1       #On initialise placement à 1 qui indique le placement dans notre chiffre
+    buckets = [0 for i in range(0, max(list_vals)+1)];
+    buckets2 = [[] for y in range(0,max(list_vals)+1)] 
+    listTmp = [0 for i in range(0, len(list_vals))]
+    while not maxLength:
+        list_counts = [int(((list_vals[i]%(placement*10))/placement)) for i in range(0,nbElem)]
+        for i in range(0,nbElem):
+            buckets[list_counts[i]]+=1
+            buckets2[list_counts[i]].append(i)
+        j=0
+        for i in range(0, max(list_vals)+1):
+            k=0
+            while buckets[i] > 0  :
+                listTmp[j]=list_vals[buckets2[i][k]]
+                j = j+1
+                k = k+1
+                buckets[i] = buckets[i] - 1
+        buckets = [0 for i in range(0, max(list_vals)+1)]
+        buckets2 = [[] for i in range(0,max(list_vals)+1)] 
+        list_vals = [listTmp[i]for i in range(0,nbElem)]
+        placement *= 10
+        if placement == 1000:
+            maxLength = True
+        print(list_vals)
+
+
+
+
+
+    tempsEc = time.time() - start_time;
+    print("Temps d'execution : %s secondes" % (tempsEc))
+    
+    
+    f = open( '%dtribase.txt' %nbElem, 'a' )
+    f.write( str(tempsEc) + '\n' )
+    f.close() 
+        
+    
+
+
+def main():
+    radixSort(25);
+
+if __name__ == "__main__":
+
+    main()
